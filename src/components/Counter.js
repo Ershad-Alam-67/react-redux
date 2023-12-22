@@ -1,43 +1,41 @@
 import classes from "./Counter.module.css"
 import { useSelector, useDispatch } from "react-redux"
-import store from "./store"
+import { counterActions } from "./store/index.js"
 
 const Counter = () => {
   const dispatch = useDispatch()
-  const toggleCounterHandler = (actionType) => {
-    if (actionType === "increment") {
-      dispatch({ type: "increment" })
-    }
-    if (actionType === "increment5") {
-      dispatch({ type: "increment5" })
-    }
-    if (actionType === "decrement5") {
-      dispatch({ type: "decrement5" })
-    }
+  function increment() {
+    dispatch(counterActions.increment(5))
   }
-  const counter = useSelector((state) => state.counter)
-
+  function decrement() {
+    dispatch(counterActions.decrement(5))
+  }
+  function tougle() {
+    dispatch(counterActions.tougle())
+  }
+  const counter = useSelector((state) => state.counter.counter)
+  const showCounter = useSelector((state) => state.counter.tougle)
   return (
     <main className={classes.counter}>
       <h1>Redux Counter</h1>
-      <div className={classes.value}>{counter}</div>
+      {showCounter && <div className={classes.value}>{counter}</div>}
       <button
-        onClick={() => toggleCounterHandler("decrement5")}
+        onClick={increment}
         className=" hover:bg-blue-600 m-1 bg-blue-700 p-6 py-2 text-white rounded-md"
       >
-        Decrement5
+        increment
       </button>
       <button
-        onClick={() => toggleCounterHandler("increment")}
+        onClick={decrement}
         className=" hover:bg-blue-600 m-1 bg-blue-700 p-6 py-2 text-white rounded-md"
       >
-        Toggle Counter
+        decrement
       </button>
       <button
-        onClick={() => toggleCounterHandler("increment5")}
+        onClick={tougle}
         className=" hover:bg-blue-600 m-1 bg-blue-700 p-6 py-2 text-white rounded-md"
       >
-        Increment5
+        tougle
       </button>
     </main>
   )

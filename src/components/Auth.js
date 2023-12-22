@@ -1,23 +1,36 @@
-import classes from './Auth.module.css';
-
+import classes from "./Auth.module.css"
+import { authActions } from "./store"
+import { useDispatch, useSelector } from "react-redux"
 const Auth = () => {
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
+  const dispatch = useDispatch()
+  const submitHandler = (e) => {
+    e.preventDefault()
+    dispatch(authActions.handleLogin())
+  }
+
   return (
     <main className={classes.auth}>
       <section>
-        <form>
+        <form onSubmit={submitHandler}>
           <div className={classes.control}>
-            <label htmlFor='email'>Email</label>
-            <input type='email' id='email' />
+            <label htmlFor="email">Email</label>
+            <input type="email" id="email" />
           </div>
           <div className={classes.control}>
-            <label htmlFor='password'>Password</label>
-            <input type='password' id='password' />
+            <label htmlFor="password">Password</label>
+            <input type="password" id="password" />
           </div>
-          <button>Login</button>
+          <button
+            type="submit"
+            className=" p-3 bg-blue-700 py-2 rounded-md text-lg px-6"
+          >
+            Login
+          </button>
         </form>
       </section>
     </main>
-  );
-};
+  )
+}
 
-export default Auth;
+export default Auth
